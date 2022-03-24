@@ -1,0 +1,526 @@
+<style>
+  @import url('http://fonts.cdnfonts.com/css/futura-condensed-pt');
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .k-calc {
+    padding: 50px 0;
+    margin: 0;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .k-calc * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .k-calc input,
+  .k-calc button {
+    outline: none;
+  }
+  .k-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 40px;
+    max-width: 1140px;
+    margin: auto;
+    padding: 0 30px;
+  }
+  .k-calc__column-1 {
+    grid-column: 3/7;
+    align-self: center;
+  }
+  .k-calc__column-2 {
+    grid-column: 7/11;
+    align-self: center;
+  }
+  .k-calc__question {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(198, 211, 219, 0.5);
+  }
+  .k-calc__question:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .k-calc__title {
+    font-family: 'Futura PT';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.5;
+    grid-column: 1/-1;
+    color: #252525;
+  }
+  .k-calc__field {
+  }
+  .k-calc__field-text {
+    font-family: 'Futura PT';
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+  .k-calc__field-input {
+    display: block;
+    max-width: 100px;
+    width: 100%;
+    padding: 5px 10px;
+    font-family: 'Futura PT';
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.5;
+    border: 1px solid #C6D3DB;
+    border-radius: 5px;
+    transition: .2s;
+  }
+  .k-calc__field-input:hover {
+    border: 1px solid #93A5AF;
+  }
+  .k-calc__field-input._error {
+    border: 1px solid #D06B6B;
+  }
+  .k-calc__radio {
+  }
+  .k-calc__radio-input {
+    display: none;
+  }
+  .k-calc__radio-label {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+    grid-gap: 10px;
+  }
+  .k-calc__radio-check {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #C6D3DB;
+    border-radius: 50px;  
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 2px;
+    transition: .2s;
+  }
+  .k-calc__radio-check:hover {
+    border: 1px solid #93A5AF;
+  }
+  .k-calc__radio-check::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #c6d3db;
+    border-radius: 50px;
+    opacity: 0;
+    transition: .2s;
+  }
+  .k-calc__radio-input:checked + .k-calc__radio-label > .k-calc__radio-check::after {
+    opacity: 1;
+  }
+  .k-calc__radio-text {
+    font-family: 'Futura PT';
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.5;
+  }
+  .k-calc__wrapper {
+    background: rgba(198, 211, 219, 0.5);
+    border-radius: 5px;
+    padding: 10px 20px 20px;
+    display: grid;
+    grid-gap: 10px;
+    justify-content: center;
+  }
+  .k-calc__wrapper .k-calc__title {
+    text-align: center;
+  }
+  .k-calc__price {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 5px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .k-calc__price-val {
+    font-family: 'Futura PT';
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.25;
+    color: #252525;
+  }
+  .k-calc__price-unit {
+    font-family: 'Futura PT';
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.25;
+    color: #C6D3DB;
+  }
+  .k-calc__checkbox {
+  }
+  .k-calc__chexbox-input {
+    display: none;
+  }
+  .k-calc__checkbox-label {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 10px;
+  }
+  .k-calc__checkbox-check {
+    display: block;
+    border: 1px solid #C6D3DB;
+    border-radius: 5px;
+    width: 16px;
+    height: 16px;
+    margin: 2px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s;
+  }
+  .k-calc__checkbox-check:hover {
+    border: 1px solid #93A5AF;
+  }
+  .k-calc__checkbox-check::after {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: #C6D3DB;
+    border-radius: 5px;
+    opacity: 0;
+    transition: .2s;
+  }
+  .k-calc__chexbox-input:checked + .k-calc__checkbox-label > .k-calc__checkbox-check::after {
+    opacity: 1;
+  }
+  .k-calc__checkbox-text {
+    font-family: 'Futura PT';
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .k-calc__input {
+    margin-top: 20px;
+    padding: 5px 10px;
+    font-family: 'Futura PT';
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.5;
+    background-color: transparent;
+    border: 1px solid #C6D3DB;
+    border-radius: 5px;
+    transition: .2s;
+  }
+  .k-calc__input:hover {
+    border: 1px solid #93A5AF;
+  }
+  .k-calc__input._error {
+    border: 1px solid #D06B6B;
+  }
+  .k-calc__btn {
+    display: block;
+    padding: 5px 20px;
+    font-family: 'Futura PT';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.5; 
+    background: #FFAF5A;
+    border-radius: 5px;
+    color: #252525;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .k-calc__btn:hover {
+    background: #FF9727;
+  }
+  .k-calc__btn[disabled] {
+    background: #C6D3DB;
+    color: #FFFFFF;
+  }
+  .k-calc__post-scriptum {
+    font-family: 'Futura PT';
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 10px 20px;
+    transition: .2s;
+  }
+  .k-calc__post-scriptum._error {
+    color: #D06B6B;
+  }
+  .k-popup {
+    max-width: 320px;
+    background: #BDE6A4;
+    border-radius: 5px;
+    padding: 10px 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px 50px #00000022;
+    z-index: -1;
+    opacity: 0;
+    transition: .5s;
+  }
+  .k-popup._open {
+    opacity: 1;
+    z-index: 50;
+  }
+  .k-popup__text {
+    font-family: 'Futura PT';
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: center;
+    color: #252525;
+  }
+  
+  @media (max-width: 1200px) {
+    .k-container {
+      grid-gap: 20px;
+    }
+    .k-calc__column-1 {
+      grid-column: 2/7;
+    }
+    .k-calc__column-2 {
+      grid-column: 7/12;
+      margin-left: 20px;
+    }
+  }
+  @media (max-width: 960px) {
+    .k-container {
+      grid-gap: 15px;
+    }
+    .k-calc__column-1 {
+      grid-column: span 5;
+      margin-right: 5px;
+    }
+    .k-calc__column-2 {
+      grid-column: span 7;
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 640px) {
+    .k-container {
+      padding: 0 20px;
+    }
+    .k-calc__column-1,
+    .k-calc__column-2 {
+      grid-column: span 12;
+    }
+    .k-calc__title,
+    .k-calc__field-text,
+    .k-calc__radio-text {
+      font-size: 18px;
+    }
+    .k-calc__checkbox-text,
+    .k-calc__post-scriptum {
+      font-size: 14px;
+    }
+    .k-calc__question {
+      grid-template-columns: auto 1fr;
+      column-gap: 60px;
+      border-top: none;
+      border-bottom: 1px solid rgba(198, 211, 219, 0.5);
+    }
+    .k-calc__wrapper {
+      padding: 20px 70px; 
+      margin-top: 15px;
+    }
+  }
+  @media (max-width: 480px) {
+    .k-calc__wrapper {
+      padding: 20px 10px;
+    }
+  }
+</style>
+  
+<div class="k-calc">
+  <form class="k-container" action="form.php" method="post">
+    <div class="k-calc__column-1">
+      <div class="k-calc__question">
+        <p class="k-calc__title">Укажите параметры вашего помещения</p>
+        <div class="k-calc__field">
+          <p class="k-calc__field-text">Длина, м</p>
+          <input type="number" class="k-calc__field-input" id="field-length" name="length">
+        </div>
+        <div class="k-calc__field">
+          <p class="k-calc__field-text">Ширина, м</p>
+          <input type="number" class="k-calc__field-input" id="field-width" name="width">
+        </div>
+      </div>
+      <div class="k-calc__question">
+        <p class="k-calc__title">Какой потолок вы хотите?</p>
+        <div class="k-calc__radio">
+          <input type="radio" class="k-calc__radio-input" name="color" id="radio-white" checked value="Белый">
+          <label for="radio-white" class="k-calc__radio-label">
+            <span class="k-calc__radio-check"></span>
+            <span class="k-calc__radio-text">Белый</span>
+          </label>
+        </div>
+        <div class="k-calc__radio">
+          <input type="radio" class="k-calc__radio-input" name="color" id="radio-color" value="Цветной">
+          <label for="radio-color" class="k-calc__radio-label">
+            <span class="k-calc__radio-check"></span>
+            <span class="k-calc__radio-text">Цветной</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="k-calc__column-2">
+      <div class="k-calc__wrapper">
+        <p class="k-calc__title">Стоимость потолка с установкой</p>
+        <p class="k-calc__price">
+          <span class="k-calc__price-val">0</span>
+          <span class="k-calc__price-unit">₽</span>
+        </p>
+        <div class="k-calc__checkbox">
+          <input type="checkbox" class="k-calc__chexbox-input" id="check-light" name="light">
+          <label for="check-light" class="k-calc__checkbox-label">
+            <span class="k-calc__checkbox-check"></span>
+            <span class="k-calc__checkbox-text">Нужна установка светильников / люстры</span>
+          </label>
+        </div>
+        <div class="k-calc__checkbox">
+          <input type="checkbox" class="k-calc__chexbox-input" id="check-injection" name="injection">
+          <label for="check-injection" class="k-calc__checkbox-label">
+            <span class="k-calc__checkbox-check"></span>
+            <span class="k-calc__checkbox-text">В помещении более 4х углов</span>
+          </label>
+        </div>
+        <div class="k-calc__checkbox">
+          <input type="checkbox" class="k-calc__chexbox-input" id="check-sale" name="sale">
+          <label for="check-sale" class="k-calc__checkbox-label">
+            <span class="k-calc__checkbox-check"></span>
+            <span class="k-calc__checkbox-text">У меня или знакомых есть еще помещения
+              для установки натяжных потолков — это даст вам скидку до 50%</span>
+          </label>
+        </div>
+        <input type="tel" class="k-calc__input" placeholder="Телефон" name="tel">
+        <button type="submit" class="k-calc__btn" disabled>Уточнить стоимость</button>
+      </div>
+      <p class="k-calc__post-scriptum">*введите номер телефона, чтобы узнать точную стоимость потолка</p> 
+    </div>
+  </form>
+  <div class="k-popup">
+    <p class="k-popup__text">Спасибо! Данные успешно отправлены. Мы свяжемся с вами </p>
+  </div>
+</div>
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  
+<script>
+  $(document).ready(() => {
+  
+  $('.k-calc__radio-input, .k-calc__chexbox-input').change(() => {
+    calculateCost()
+  })
+  
+  $('.k-calc__field-input').on('input', () => {
+    calculateCost()
+  })
+  
+  $('.k-calc__input').on('blur', function () {
+    $('.k-calc__post-scriptum').removeClass('_error')
+    $(this).removeClass('_error')
+  })
+  
+  $('.k-calc__input').on('input', function () {
+    validatePhone($(this))
+  })
+  
+  $('.k-calc__btn').click(function(e) {
+    sendData(e)
+  })
+  
+  $('.k-popup').click(function() {
+    $(this).removeClass('_open')
+  })
+  
+  function calculateCost() {
+  
+    let inputLength = $('#field-length').val() * 1
+    let inputWidth = $('#field-width').val() * 1
+    let radioWhite = $('#radio-white').is(':checked')
+    let radioColor = $('#radio-color').is(':checked')
+    let checkLight = $('#check-light').is(':checked')
+    let checkInjection = $('#check-injection').is(':checked')
+    let checkSale = $('#check-sale').is(':checked')
+  
+    let square = inputLength * inputWidth
+    let perimeter = (inputLength + inputWidth) * 2
+    let costCanvas = 0
+    let costBaguette = perimeter * 30
+    let costInsert = perimeter * 11
+    let costSetCanvas = square * 60
+    let costSetBaguette = perimeter * 60
+    let costSetInsert = perimeter * 25
+    if (radioWhite) {
+      if (inputWidth <= 3.2) {
+        costCanvas = 120
+      }
+      if (inputWidth > 3.2 && inputWidth <= 3.6) {
+        costCanvas = 130
+      }
+      if (inputWidth > 3.6) {
+        costCanvas = 170
+      }
+    }
+    if (radioColor) {
+      if (inputWidth <= 3.2) {
+        costCanvas = 175
+      }
+      if (inputWidth > 3.2) {
+        costCanvas = 240
+      }
+    }
+    costCanvas = square * costCanvas
+    let price = costCanvas + costBaguette + costInsert + costSetCanvas + costSetBaguette + costSetInsert
+    let price1 = ((price * 0.45) + price).toFixed()
+    let price2 = ((price * 0.60) + price).toFixed()
+  
+    price = price1 + ' - ' + price2
+    $('.k-calc__price-val').text(price)
+  }
+
+  function validatePhone(input) {
+  
+    if (input.val().length < 5) {
+      $('.k-calc__post-scriptum').text('*введите корректный номер телефона (не менее5 цифр), чтобы узнать точную стоимость потолка')
+      $('.k-calc__post-scriptum').addClass('_error')
+      input.addClass('_error')
+      $('.k-calc__btn').attr('disabled', true)
+      return false
+    }
+  
+    $('.k-calc__btn').attr('disabled', false)
+    $('.k-calc__post-scriptum').removeClass('_error')
+    input.removeClass('_error')
+    return true
+
+  }
+  
+  function sendData(e) {
+    e.preventDefault()
+    let data = $(e.target).closest('form').serialize()
+
+    $.post('form.php', data, function (response) {
+      var result = JSON.parse(response)
+      if (result.success == "1") {
+        $('.k-popup').addClass('_open')
+        setTimeout(() => {
+          $('.k-popup').removeClass('_open')
+        }, 3000)
+      }
+    })
+  }
+
+  })
+</script>
